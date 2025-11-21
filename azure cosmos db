@@ -1,0 +1,132 @@
+// Database: maxclaim
+// Collections:
+
+// Collection: claims
+{
+  "_id": "MC-102",
+  "userId": "user_abc123",
+  "propertyAddress": "123 Main St, Austin TX",
+  "ownerName": "John Smith",
+  "damageDescription": "Roof wind damage...",
+  "status": "awaiting_docs", // submitted, in_review, approved, rejected
+  "claimValue": 7100,
+  "materialCost": 5850,
+  "laborCost": 0,
+  "overheadProfit": 1250,
+  "region": "Travis County, TX",
+  "wasteFactors": {
+    "roofing": 0.12,
+    "drywall": 0.15
+  },
+  "documents": [
+    {
+      "id": "doc_001",
+      "type": "photo",
+      "blobUrl": "https://maxclaim.blob.core.windows.net/claims/MC-102/photo1.jpg",
+      "sasToken": "encrypted_token",
+      "caption": "Damaged roof shingles",
+      "ocrData": {
+        "text": "extracted text...",
+        "confidence": 0.95,
+        "labels": ["roof", "damage", "shingles"]
+      },
+      "uploadedAt": "2025-01-15T10:30:00Z"
+    }
+  ],
+  "carrierInfo": {
+    "name": "Liberty Mutual",
+    "policyNumber": "LM-123456",
+    "submittedAt": "2025-01-20T14:00:00Z"
+  },
+  "createdAt": "2025-01-15T09:00:00Z",
+  "updatedAt": "2025-01-20T14:00:00Z"
+}
+
+// Collection: users
+{
+  "_id": "user_abc123",
+  "azureAdId": "azure_ad_object_id",
+  "email": "contractor@example.com",
+  "name": "Royal RC Inc",
+  "role": "contractor", // adjuster, admin
+  "companyName": "Royal RC Inc",
+  "connectedServices": {
+    "github": { "connected": false },
+    "dropbox": { 
+      "connected": true, 
+      "accessToken": "encrypted_in_key_vault",
+      "refreshToken": "encrypted_in_key_vault"
+    },
+    "onedrive": { "connected": true },
+    "plaid": { "connected": false }
+  },
+  "subscription": {
+    "tier": "free", // pro, enterprise
+    "stripeCustomerId": "cus_xxx",
+    "validUntil": "2025-12-31T23:59:59Z"
+  },
+  "createdAt": "2025-01-01T00:00:00Z"
+}
+
+// Collection: metrics (aggregated daily)
+{
+  "_id": "metrics_user_abc123_2025-01",
+  "userId": "user_abc123",
+  "period": "2025-01",
+  "revenueRecovered": 128500,
+  "successRate": 82,
+  "activeClaims": 6,
+  "averageClaimValue": 21400,
+  "claimsCreated": 12,
+  "claimsSubmitted": 10,
+  "claimsApproved": 8,
+  "claimsRejected": 2,
+  "calculatedAt": "2025-01-31T23:59:59Z"
+}
+
+// Collection: pricing
+{
+  "_id": "pricing_travis_county_tx",
+  "region": "Travis County, TX",
+  "state": "TX",
+  "zipCodes": ["78701", "78702", "78703"],
+  "wasteFactors": {
+    "roofing": 0.12,
+    "drywall": 0.15,
+    "flooring": 0.10
+  },
+  "laborRates": {
+    "roofing": 45.00,
+    "drywall": 38.00,
+    "carpentry": 42.00
+  },
+  "overheadPercent": 15,
+  "profitPercent": 10,
+  "xactimateVersion": "2025.1",
+  "updatedAt": "2025-01-01T00:00:00Z"
+}
+
+// Collection: notifications
+{
+  "_id": "notif_001",
+  "userId": "user_abc123",
+  "message": "Claim #MC-102 requires documentation",
+  "type": "action_required", // info, success, warning
+  "claimId": "MC-102",
+  "read": false,
+  "createdAt": "2025-01-15T10:00:00Z"
+}
+
+// Collection: audit_logs (for compliance)
+{
+  "_id": "audit_001",
+  "userId": "user_abc123",
+  "action": "claim_created",
+  "claimId": "MC-102",
+  "ipAddress": "192.168.1.1",
+  "userAgent": "Mozilla/5.0...",
+  "timestamp": "2025-01-15T09:00:00Z",
+  "metadata": {
+    "propertyAddress": "123 Main St"
+  }
+}
