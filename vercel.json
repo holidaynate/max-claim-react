@@ -1,0 +1,17 @@
+{
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
+  "framework": "vite",
+  "env": {
+    "VITE_FIREBASE_API_KEY": "@firebase-api-key",
+    "VITE_FIREBASE_AUTH_DOMAIN": "@firebase-auth-domain",
+    "VITE_FIREBASE_PROJECT_ID": "@firebase-project-id",
+    "VITE_GOOGLE_VISION_API_KEY": "@vision-api-key"
+  },
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/$1"
+    }
+  ]
+}
