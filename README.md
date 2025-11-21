@@ -1,21 +1,24 @@
 # Your current structure should be:
 maxclaim-rec-suite-site/
 ├── src/
-│   ├── App.jsx (your pasted code)
-│   ├── index.jsx
-│   └── index.css (Tailwind)
+│   ├── App.jsx (your React code)
+│   ├── main.jsx
+│   ├── index.css
+│   └── config/
+│       └── azure.js (Azure SDK config)
+├── api/ (Azure Functions)
+│   ├── claims/
+│   │   └── index.js
+│   ├── ocr/
+│   │   └── index.js
+│   ├── upload/
+│   │   └── index.js
+│   └── host.json
 ├── public/
 │   └── index.html
-├── api/ (NEW - for serverless functions)
-│   ├── claims.js
-│   ├── ocr.js
-│   └── upload.js
-├── firebase.json
-├── firestore.rules
-├── storage.rules
+├── staticwebapp.config.json
 ├── package.json
-├── vercel.json (NEW)
-└── .env.local (gitignored)
+└── vite.config.js
 # max-claim-react
 react tailwind for azure to site
 QUICK START COMMANDS
