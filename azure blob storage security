@@ -1,0 +1,22 @@
+// Generate SAS tokens for secure file access
+const { BlobServiceClient, generateBlobSASQueryParameters, BlobSASPermissions } = require("@azure/storage-blob");
+
+async function generateSasUrl(blobName, userId) {
+  const blobServiceClient = BlobServiceClient.fromConnectionString(
+    process.env.AZURE_STORAGE_CONNECTION_STRING
+  );
+  
+  const containerClient = blobServiceClient.getContainerClient("claims");
+  const blobClient = containerClient.getBlobClient(`${userId}/${blobName}`);
+  
+  // SAS token valid for 1 hour
+  const sasToken = generateBlobSASQueryParameters({
+    containerName: "claims",
+    blobName: `${userId}/${blobName}`,
+    permissions: BlobSASPermissions.parse("r"), // read-only
+    startsOn: new Date(),
+    expiresOn: new Date(new Date().valueOf() + 3600 * 1000)
+  }, blobServiceClient.credential).toString();
+  
+  return `${blobClient.url}?${sasToken}`;
+}
