@@ -1,0 +1,16 @@
+├── src/
+│   ├── App.jsx (your pasted code)
+│   ├── index.jsx
+│   └── index.css (Tailwind)
+├── public/
+│   └── index.html
+├── api/ (NEW - for serverless functions)
+│   ├── claims.js
+│   ├── ocr.js
+│   └── upload.js
+├── firebase.json
+├── firestore.rules
+├── storage.rules
+├── package.json
+├── vercel.json (NEW)
+└── .env.local (gitignored)
