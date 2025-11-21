@@ -1,0 +1,24 @@
+// Using Azure AD RBAC + Connection String
+// Store connection string in Azure Key Vault
+
+// In your Azure Functions:
+const { CosmosClient } = require("@azure/cosmos");
+
+const endpoint = process.env.COSMOS_ENDPOINT;
+const key = process.env.COSMOS_KEY; // From Key Vault
+
+const client = new CosmosClient({ endpoint, key });
+const database = client.database("maxclaim");
+const container = database.container("claims");
+
+// Row-level security via function logic
+async function getClaims(userId) {
+  const { resources } = await container.items
+    .query({
+      query: "SELECT * FROM c WHERE c.userId = @userId",
+      parameters: [{ name: "@userId", value: userId }]
+    })
+    .fetchAll();
+  
+  return resources;
+}
